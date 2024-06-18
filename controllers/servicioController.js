@@ -31,7 +31,8 @@ const agregarServicio = async (req, res) => {
             EstadoPago: req.body.EstadoPago,
             MontoPago: req.body.MontoPago,
             Personal: req.body.Personal,
-            vehiculoId: req.body.vehiculoId
+            vehiculoId: req.body.vehiculoId,
+            Estado: 'A'
         }
         const servicio = await Servicio.create(info, { transaction: t });
         await t.commit();
@@ -75,8 +76,10 @@ const obtenerServicios = async (req, res) => {
                 model: Vehiculo,
                 as: 'vehiculo',
                 attributes: ['Placa', 'Tipo', 'Marca', 'Modelo', 'Anio']
-                
-            }]
+            }],
+            where: {
+                Estado: 'A'
+            }
         })
         res.status(200).send(servicios)
     } catch (error) {
@@ -90,9 +93,6 @@ const buscarServicios = async (req, res) => {
     let id = req.body.vehiculoId
     try {
         let servicios = await Servicio.findAll({
-            where: {
-                vehiculoId: id
-            },
             attributes: [
                 'id',
                 'Tipo',
@@ -100,8 +100,8 @@ const buscarServicios = async (req, res) => {
                 'Detalle',
                 'KmA',
                 'KmPC',
-                [sequelize.literal('DATE_FORMAT(Fecha, "%d/%m/%Y")'), 'FechaFormateada'],
-                [sequelize.literal('DATE_FORMAT(Fecha, "%Y-%m-%d")'), 'FechaIngreso'],
+                [sequelize.literal('DATE_FORMAT(Servicio.Fecha, "%d/%m/%Y")'), 'FechaFormateada'],
+                [sequelize.literal('DATE_FORMAT(Servicio.Fecha, "%Y-%m-%d")'), 'FechaIngreso'],
                 'Monto',
                 'EstadoPago',
                 'MontoPago',
@@ -111,8 +111,12 @@ const buscarServicios = async (req, res) => {
             include: [{
                 model: Vehiculo,
                 as: 'vehiculo',
-                attributes: ['Placa', 'Tipo', 'Marca', 'Modelo', 'Anio']
-            }]
+                attributes: ['Placa', 'Tipo', 'Anio']
+            }],
+            where: {
+                vehiculoId: id,
+                Estado: 'A'
+            }
         })
         res.status(200).send(servicios)
     } catch (error) {

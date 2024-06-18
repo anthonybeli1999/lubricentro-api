@@ -5,23 +5,28 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true
         },
-        Tipo: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        Marca: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        Modelo: {
-            type: DataTypes.STRING,
+        modeloId: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         Anio: {
             type: DataTypes.STRING,
         },
-        clienteId: {
-            type: DataTypes.INTEGER,
+        Tipo: {
+            type: DataTypes.STRING,
+        },
+        Cliente: {
+            type: DataTypes.STRING,
+        },
+        Celular: {
+            type: DataTypes.STRING,
+        },
+        Fecha: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        Estado: {
+            type: DataTypes.STRING,
             allowNull: false
         }
     })

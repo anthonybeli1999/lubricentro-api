@@ -9,14 +9,17 @@ app.use(express.json())
 
 //ROUTERS
 
-const clienteRouter = require('./routes/clienteRouter.js')
-app.use('/api/cliente', clienteRouter)
-
 const vehiculoRouter = require('./routes/vehiculoRouter.js')
 app.use('/api/vehiculo', vehiculoRouter)
 
 const servicioRouter = require('./routes/servicioRouter.js')
 app.use('/api/servicio', servicioRouter)
+
+const marcaRouter = require('./routes/marcaRouter.js')
+app.use('/api/marca', marcaRouter)
+
+const modeloRouter = require('./routes/modeloRouter.js')
+app.use('/api/modelo', modeloRouter)
 
 //TESTING API
 
